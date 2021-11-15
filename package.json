@@ -18,6 +18,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
     "@types/jest": "^27.0.2",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^16.11.7",
