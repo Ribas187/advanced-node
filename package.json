@@ -10,6 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
+    "test:staged": "npm test -- --findRelatedTests",
     "test:cov": "npm test -- --coverage"
   },
   "keywords": [],
@@ -26,6 +27,7 @@
     "eslint-config-airbnb-typescript": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jest": "^27.3.1",
+    "lint-staged": "^12.0.2",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.4"
   },
