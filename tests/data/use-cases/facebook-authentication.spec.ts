@@ -1,12 +1,12 @@
 /* eslint-disable max-classes-per-file */
+import { mock } from 'jest-mock-extended';
 import { FacebookAuthenticationUseCase } from '@/data/use-cases';
 import { AuthenticationError } from '@/domain/errors';
+import { LoadFacebookUserApi } from '@/data/contracts/apis';
 
 describe('FacebookAuthenticationUseCase', () => {
   it('should call LoadFacebookUserApi with correct params', async () => {
-    const loadFacebookUserApi = {
-      loadUser: jest.fn(),
-    };
+    const loadFacebookUserApi = mock<LoadFacebookUserApi>();
 
     const sut = new FacebookAuthenticationUseCase(loadFacebookUserApi);
 
@@ -17,9 +17,7 @@ describe('FacebookAuthenticationUseCase', () => {
   });
 
   it('should return AuthenticationError when LoadFacebookUserApi returns undefined', async () => {
-    const loadFacebookUserApi = {
-      loadUser: jest.fn(),
-    };
+    const loadFacebookUserApi = mock<LoadFacebookUserApi>();
 
     loadFacebookUserApi.loadUser.mockResolvedValueOnce(undefined);
 
