@@ -19,18 +19,23 @@ export class FacebookAuthenticationUseCase {
     params: FacebookAuthentication.Params,
   ): Promise<AuthenticationError> {
     const fbData = await this.facebookApi.loadUser(params);
+
     if (fbData !== undefined) {
-      const accountData = await this.userAccountRepo.load({ email: fbData.email });
-      if (accountData?.name !== undefined) {
+      const accountData = await this.userAccountRepo.load({
+        email: fbData.email,
+      });
+
+      if (accountData !== undefined) {
         await this.userAccountRepo.updateWithFacebook({
           id: accountData.id,
-          name: accountData.name,
+          name: accountData?.name ?? fbData.name,
           facebookId: fbData.facebookId,
         });
       } else {
         await this.userAccountRepo.createFromFacebook(fbData);
       }
     }
+
     return new AuthenticationError();
   }
 }
