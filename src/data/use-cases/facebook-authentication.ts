@@ -18,14 +18,19 @@ export class FacebookAuthenticationUseCase implements FacebookAuthentication {
 
   async perform(
     params: FacebookAuthentication.Params,
-  ): Promise<AuthenticationError> {
+  ): Promise<FacebookAuthentication.Result> {
     const fbData = await this.facebookApi.loadUser(params);
 
     if (fbData !== undefined) {
       const accountData = await this.userAccountRepo.load({ email: fbData.email });
       const fbAccount = new FacebookAccount(fbData, accountData);
       const { id } = await this.userAccountRepo.saveWithFacebook(fbAccount);
-      await this.crypto.generateToken({ key: id, expirationInMs: AccessToken.expirationInMs });
+      const token = await this.crypto.generateToken({
+        key: id,
+        expirationInMs: AccessToken.expirationInMs,
+      });
+
+      return new AccessToken(token);
     }
 
     return new AuthenticationError();
